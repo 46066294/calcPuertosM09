@@ -59,7 +59,6 @@ public class ClienteCalc {
 
             System.out.println("Resultado de la operacion:");
 
-
             byte[] k = new byte[50];
             is.read(k);
             System.out.println(new String(k));
