@@ -64,7 +64,7 @@ public class Operacion {
             return msgTotal;
 
         }else{
-            String msgSalida = "QUE COÑO DICES?";
+            String msgSalida = "...formato incorrecto";
             System.out.println(msgSalida);
             return msgSalida;
         }

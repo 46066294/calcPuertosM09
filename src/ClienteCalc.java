@@ -1,6 +1,4 @@
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.Scanner;
@@ -10,62 +8,50 @@ import java.util.Scanner;
  */
 public class ClienteCalc {
     public static void main(String[] args) {
+        try {
+
         Scanner scanner = new Scanner(System.in);
 
-        Socket clienteSocket = new Socket();
-        System.out.println("...creado el socket cliente");
-        System.out.println("...estableciendo conexion");
+            int cont = 0;
+            while(cont < 5){
+                //os.flush();
+                Socket clienteSocket = new Socket();
+                System.out.println("...creado el socket cliente");
+                System.out.println("...estableciendo conexion");
 
-        /*
-        Un puerto es un lugar logico donde escuchar una conexion
-        Hay asta 65 mil puertos. Hay algunos puertos reservados
-        el 80 es http
-        el 5432 es reservado para postgreSQL
-        ...
 
-         */
+                InetSocketAddress addr = new InetSocketAddress("172.31.83.41", 5555);
 
-        InetSocketAddress addr = new InetSocketAddress("172.31.83.41", 5555);
-        try {
-            /*
-            Este comando conecta el socket con la direccion y
-            el puerto especificado
-             */
 
-            clienteSocket.connect(addr);
+                clienteSocket.connect(addr);
 
-            /*
-            Los comandos siguientes por donde va a escuchar y por
-            donde va a hablar
-             */
-            InputStream is = clienteSocket.getInputStream();
-            OutputStream os = clienteSocket.getOutputStream();
+                InputStream is = clienteSocket.getInputStream();
+                OutputStream os = clienteSocket.getOutputStream();
+                System.out.println("\n...escriba mensaje:");
+                String operacion = scanner.nextLine();
+                os.write(operacion.getBytes());
+                System.out.println("...mensaje enviado");
+                System.out.println("Resultado de la operacion:");
 
-            byte[] mngBienvenidaServer = new byte[50];
-            is.read(mngBienvenidaServer);
-            System.out.println(new String(mngBienvenidaServer));
+                byte[] k = new byte[50];
+                is.read(k);
+                System.out.println(new String(k));
+                cont++;
 
-            System.out.println("\n...escriba mensaje:");
 
-            String operacion = scanner.nextLine();
+                byte[] mngBienvenidaServer = new byte[50];
+                is.read(mngBienvenidaServer);
+                System.out.println(new String(mngBienvenidaServer));
 
-            /*
-            Ponemos el mensaje en el canal
-            RECORDAR que hay que ponerlo en bits
-             */
-            os.write(operacion.getBytes());
+                //System.out.println("\n...escriba mensaje:");
 
-            System.out.println("...mensaje enviado");
 
-            System.out.println("Resultado de la operacion:");
 
-            byte[] k = new byte[50];
-            is.read(k);
-            System.out.println(new String(k));
+                is.close();
+                os.close();
+                clienteSocket.close();
+            }
 
-            is.close();
-            os.close();
-            clienteSocket.close();
 
         } catch (IOException e) {
             e.printStackTrace();
