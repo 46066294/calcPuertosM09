@@ -1,0 +1,62 @@
+Pràctica 2 – Protocols de comunicació segurs
+SSL (Secure Sockets Layer), que traduït significa, capa de connexions segures
+és un protocol que fa us de certificats digitals per a establir comunicacions
+segures a mitjançant internet.
+Feu les modificacions necessàries a la pràctica de la calculadora multifil per a
+que funcioni emprant la tecnologia SSL. Heu d'esbrinar el procediment per a
+que funcioni. Redacteu les instruccions que s'han d'emprar.
+IMPORTANT: Heu d'entregar el codi, i les instruccions per a executar-ho.
+
+------------------------------------------------------------------------------------
+
+
+INSTRUCCIONS PER A IMPLEMENTAR SSL
+
+1 - Obrir consola de windows (o Linux) amb drets d'administrador
+
+2 - Anar al directori on esta el JDK que utilitzem al nostre projecte
+    En el nostre cas:
+        C:\Program Files\Java\jdk1.8.0_66\bin
+            (Aqui podrem veure que hi ha un executable que es diu keytool)
+
+3 - Introduir el seguent comandament:
+    keytool -genkey -keystore marc -keyalg RSA
+
+4 - Ens demanara un password per al nou magatzem de claus que es creara (almenys 6 caracters)
+    Password: marcstore
+    nom i cognom: marc cano
+    nom d'unitat d'organitzacio: ecaib
+    nom de l'organitzacio: ecaib
+    ciutat: barcelona
+    provincia: barcelona
+    codi del pais: ES
+    Password: marcstore
+
+5 - Aixo ens generarà un arxiu a la ruta especificada C:\Program Files\Java\jdk1.8.0_66\bin
+    amb el nom de "marc". Aquest es el fitxer que posteriroment copiarem al nostre projecte
+
+6 - A continuacio introduim el seguent comandament
+    keytool -certreq -keyalg RSA -file certreq.csr -keystore marc
+
+7 - Aixo ens generara un arxiu de peticio amb nom certreq.csr
+    Si volem veure el text de l'arxiu introduim el seguent comandament:
+        type certreq.csr
+
+8 - Copiem el fitxer del punt 5 dins el directori mes generic del nostre projecte
+    Important:
+        Veure linies 19 i 20 de la clase ServidorCalc.java
+        Veure linia 14 de la clase ClienteCalc.java
+
+
+------------------------------------------------------------------------------------
+
+BIBLIOGRAFIA
+
+http://www.phonegapspain.com/topic/no-consigo-firma-mi-aplicacion-de-ninguna-forma/
+http://chuwiki.chuidiang.org/index.php?title=Socket_SSL_con_Java
+
+------------------------------------------------------------------------------------
+
+TUTORIAL IMPORTANT
+Secure Sockets - Java Sockets Tutorial 06
+https://www.youtube.com/watch?v=l4_JIIrMhIQ&list=PLP-dpkkinybmBnmSB3-NTBb2JWJGoZpXM&index=7

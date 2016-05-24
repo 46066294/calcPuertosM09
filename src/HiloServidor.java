@@ -23,10 +23,10 @@ public class HiloServidor extends Thread {
     @Override
     public void run() {
         super.run();
-        System.out.println("...se ha recibido una llamada\n");
+        System.out.println("\n...se ha recibido una llamada");
 
         try {
-            System.out.println("Recibida la llamada de: "+ip);
+            System.out.println("Recibida la llamada de: " + ip + "\n");
 
             InputStream is = socketEscucha.getInputStream();
             OutputStream os = socketEscucha.getOutputStream();
@@ -39,7 +39,7 @@ public class HiloServidor extends Thread {
             msgEntrada = new String(mensaje);
 
             os.write(Operacion.calcular(msgEntrada).getBytes());
-            System.out.println(msgEntrada);
+            //System.out.println(msgEntrada);
 
             System.out.println("...cerrando");
 
@@ -48,6 +48,7 @@ public class HiloServidor extends Thread {
             //serverSocket.close();
             is.close();
             os.close();
+
 
         } catch (IOException e) {
             e.printStackTrace();
